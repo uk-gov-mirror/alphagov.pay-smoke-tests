@@ -19,6 +19,7 @@ exports.handler = async () => {
   apiToken = secret.CARD_SANDBOX_API_TOKEN
   publicApiUrl = secret.PUBLIC_API_URL
   const emailAddress = secret.EMAIL_ADDRESS
+  const agreementPaymentType = 'unscheduled'
 
   let createAgreementResponse, payment
 
@@ -28,7 +29,7 @@ exports.handler = async () => {
 
   await synthetics.executeStep('Setup payment for the agreement', async function () {
     payment = await recCardPaymentTestHelpers.setupPaymentForAgreement(publicApiUrl, apiToken, provider,
-      createAgreementResponse.agreement_id, sandboxCard, emailAddress)
+      createAgreementResponse.agreement_id, sandboxCard, emailAddress, agreementPaymentType)
   })
 
   if (WEBHOOKS_ENABLED === 'true') {
